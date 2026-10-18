@@ -22,6 +22,8 @@ agent_created: true
 
 **上游依赖**：本技能假定已有一份签核的 FRD（或等价需求）。若输入只有模糊的业务诉求、没有 FRD，应先提示用户走 BA 流程（或转交 servicenow-ba），不直接跳到技术设计。
 
+**输入校验（接手第一步，与 BA 的「FRD 交接准入标准」对齐）**：检查 FRD 是否满足 5 项准入——业务完整性、对象清晰、业务可行性已判断、验收视角已写入、待确认项已显式列出。不满足则退回 BA 补齐，不臆测补全；满足则进入模块复核与技术设计。
+
 ## 使用时机
 
 - 把签核后的 FRD 拆解为用户故事（Story）并补全验收标准（AC）
@@ -59,15 +61,16 @@ agent_created: true
 
 > 原则：能给 OOTB/配置方案，就不给定制；必须定制时，把代价和风险讲清楚，让干系人知情决策。HRSD 领域的定制尤其要评估**保密性/权限**与**升级影响**。
 
-## 第三步：平台细节核查（回退到 ServiceNowDocs）
+## 第三步：平台细节核查（回退到 ServiceNowDocs，强制步骤）
 
-设计涉及**具体字段、配置、API、版本差异**时，**禁止凭记忆臆测**，回退到官方文档核查：
+设计涉及**具体字段、配置、API、版本差异**时，**禁止凭记忆臆测**。这不是可选项，而是硬性步骤：
 
-- 官方文档仓库：`https://github.com/ServiceNow/ServiceNowDocs`
-- 入口 `llms.txt`（AI 可读的总索引）：`https://raw.githubusercontent.com/ServiceNow/ServiceNowDocs/brazil/llms.txt`
-- 文档按版本分支（brazil/australia/zurich/yokohama），按出版物（publication）分目录
-- Raw 文档 URL 模式：`.../markdown/{publication}/{file}`
-- 注意：不要抓 `servicenow.com/docs`（JS 单页应用，LLM 读不出内容）
+**强制动作**：凡是要给出具体表名、字段名、API 端点、配置项、OOTB 能力是否存在时，**必须先 fetch 官方文档核查**，再写进 Story/TSD。不允许先凭记忆写出、事后补查。
+
+核查路径：
+1. 先取总索引 `https://raw.githubusercontent.com/ServiceNow/ServiceNowDocs/brazil/llms.txt`，定位目标 publication（如 employee-service-management、hr-service-delivery）。
+2. 按 `.../markdown/{publication}/{file}` 取具体文档，确认字段/表/API 的真实存在性与版本。
+3. 注意：不要抓 `servicenow.com/docs`（JS 单页应用，LLM 读不出内容）；版本分支 brazil（最新）/ australia / zurich / yokohama。
 
 核查清单（设计前自问）：
 - 这个表/字段是 OOTB 的吗？在哪个模块？哪个版本？
@@ -75,10 +78,12 @@ agent_created: true
 - 这个集成有预建 Spoke 吗？还是只能 REST API？
 - HRSD 的权限/保密机制（HR Criteria / User Criteria / 安全组角色）怎么配？
 
+**无法核查时的处理**：若文档暂时取不到（网络/限流），必须在 TSD 中显式标注该技术点为「未核实」并列为待确认项，不得当作已确认事实写入交付物。
+
 ## 端到端工作流（FRD → Story + TSD）
 
-1. **输入校验**：确认 FRD 已签核、需求可开发；缺失信息列出待确认项，不臆测补全。
-2. **模块复核 + 平台核查**：确认模块，对涉及平台细节的点回退官方文档核查。
+1. **输入校验**：确认 FRD 已签核、满足 5 项交接准入；缺失信息列出待确认项，不臆测补全。
+2. **模块复核 + 平台核查**：确认模块，对涉及平台细节的点**强制**回退官方文档核查（见第三步），未核实项显式标注。
 3. **技术方案设计**：定表结构、字段、Flow/审批、SLA、集成、权限；逐条标注 OOTB/配置/定制。
 4. **拆解用户故事**：按功能切片拆 Story，**把字段/流程/集成细节塞进验收标准（AC）**，用 `assets/templates/user-story-template.md`。
 5. **汇总技术设计文档（TSD）**：用 `assets/templates/tsd-template.md` 汇总全局技术方案，作为 Story 的"总纲"。

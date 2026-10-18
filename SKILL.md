@@ -54,13 +54,25 @@ agent_created: true
 1. **干系人识别**：确认流程负责人、业务用户、技术对接人；产出干系人清单（角色、关注点、沟通频率）。
 2. **需求收集**：参照 `references/elicitation-playbook.md` 的分级策略执行。常规用 Workshop（议程=每天一个目录项/主题，会前发议程，会后当天发 MOM）；需求模糊时升级为深度启发（用户访谈、流程观察、竞品分析、PDI 原型演示）。
 3. **BRD**（业务要什么）：用 `assets/templates/brd-template.md`。若客户已提供 BRD，直接进入下一步并做需求评审。**只写业务需要，不写技术实现**。
-4. **FRD**（ServiceNow 怎么做）：用 `assets/templates/frd-template.md`。面向开发者，必须精确：触发器、动作、时序、字段/变量、**OOTB 能力 vs 定制代码逐条标注**、SLA 规则、通知、RBAC。签核前需技术评审。
+4. **FRD**（ServiceNow 怎么做）：用 `assets/templates/frd-template.md`。面向开发者，必须精确：触发器、动作、时序、字段/变量、SLA 规则、通知、RBAC。**注意：OOTB vs 定制的最终技术判定由 Architect 负责**，BA 的 FRD 只做业务可行性判断（这个需求能不能做、业务上要什么），不做表结构/字段/Flow 的技术定案。签核前需技术评审。
 5. **用户故事与验收标准**：用 `assets/templates/user-story-template.md`。若干系人直接提供故事，转为审核模式：补验收标准、核对 DoR、按优先级和 Sprint 分配给开发。
 6. **RTM**：用 `assets/templates/rtm-template.md`，建立 BRD 条目 → FRD 条目 → 用户故事 → 测试用例的追溯链。
 7. **UAT**：用 `assets/templates/uat-plan-template.md`。管控范围蔓延——UAT 阶段客户新增需求时，走变更流程或排入下一期，用数据和排期说服客户，不口头承诺。
 8. **Go-Live 与 Hypercare**：UAT 签核 → 发布验证 → 上线 → 一周护航期（每日跟进、缺陷分级处理、收集反馈）→ 持续改进建议。
 
 敏捷工具保持中立：方法论不因 Jira 或 ServiceNow Agile Development 而改变，产出物可同时落地两种工具。
+
+## FRD 交接准入标准（交付 Architect 前必查）
+
+FRD 是 BA 与 Architect 之间的**交接件**。交付 Architect 前，FRD 必须满足以下准入条件，缺一不可：
+
+1. **业务完整性**：每个功能需求有明确的业务目标、触发场景、业务规则（谁在什么条件下做什么）。不允许"待定""视情况"。
+2. **对象清晰**：涉及的 HR Case / HR Service / Lifecycle Event / Journey / HR Task 等业务对象已识别，且模块归属明确（HRSD 或协同模块）。
+3. **业务可行性已判断**：BA 已判断"这个需求能不能做"，但**不替 Architect 做技术定案**（表结构、字段、Flow、OOTB vs 定制的最终决定留给 Architect）。
+4. **验收视角已写入**：每个需求至少有一个可验证的业务验收标准（从业务角度，非技术角度）。
+5. **待确认项已显式列出**：尚未确认的业务输入（如国家清单、材料规则、审批矩阵、SLA 目标值）单独列为「待确认项」，不混入正文造成误导。
+
+若 FRD 未达准入标准，BA 应先补齐（走启发/评审），不把残缺需求推给 Architect 臆测补全。准入判断同时是 Architect 接手时的第一步输入校验（见 `servicenow-architect` 技能）。
 
 ## 必须内化的平台知识（HRSD 为重点）
 
