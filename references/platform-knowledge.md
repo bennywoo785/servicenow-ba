@@ -2,6 +2,8 @@
 
 BA 不需要写代码，但必须懂平台：干系人会随时提问，不懂配置层会在客户面前失分，也无法判断 OOTB vs 定制。
 
+> **平台细节核查（回退官方文档）**：本文件是精简基线，覆盖不了所有官方细节。当 FRD/需求涉及**具体字段、配置、API、版本差异**时，禁止凭记忆臆测，回退官方文档仓库核查：入口 `https://raw.githubusercontent.com/ServiceNow/ServiceNowDocs/brazil/llms.txt`，按版本分支（brazil 最新/australia/zurich/yokohama）与出版物目录取 markdown；勿抓 `servicenow.com/docs`（JS 单页应用，LLM 读不出内容）。
+
 ## 模块判定（先做：判断业务诉求属于哪个模块）
 
 接到需求后，先按"业务诉求的对象"判定模块，再加载对应知识主线：

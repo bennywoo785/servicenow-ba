@@ -1,10 +1,19 @@
-# servicenow-ba
+# ServiceNow BA + Architect 技能集
 
-一个专注于 **ServiceNow HRSD（人力资源服务交付）** 的 Business Analyst 技能包。
+一组专注于 **ServiceNow HRSD（人力资源服务交付）** 的 AI 技能包，覆盖「需求 → 设计 → 开发」端到端流程。
 
-> **跨平台可用**：本技能包原生格式为 WorkBuddy Skill，同时提供主流 AI 平台的转换版本——ChatGPT（Custom GPT）、Claude Projects、Gemini Gems、Cursor、GitHub Copilot。核心知识、方法论与模板平台无关，仅外壳格式不同。详见下方「多平台安装」。
+> **跨平台可用**：技能原生格式为 WorkBuddy Skill，同时提供主流 AI 平台的转换版本——ChatGPT（Custom GPT）、Claude Projects、Gemini Gems、Cursor、GitHub Copilot。核心知识、方法论与模板平台无关，仅外壳格式不同。
 
-扮演连接业务团队与 ServiceNow 平台团队的桥梁，处理 ServiceNow 项目的需求全生命周期：干系人识别、需求启发与 Workshop 组织、BRD/FRD 编写、用户故事与验收标准、流程映射（as-is/to-be）、差距分析、RTM、UAT 与缺陷管理、Go-Live 与 Hypercare。
+## 两个技能（构成流水线）
+
+| 技能 | 角色 | 职责 | 产出 |
+|---|---|---|---|
+| **servicenow-ba** | 业务分析师 | 需求启发、BRD/FRD 编写 | BRD / FRD |
+| **servicenow-architect** | 解决方案架构师 | FRD 拆解、技术方案设计 | 用户故事（Story+AC）/ TSD |
+
+**流水线**：`servicenow-ba` 产出签核后的 FRD → `servicenow-architect` 承接，拆解为可开发的 Story + 技术设计文档（TSD），平台细节回退到官方文档（ServiceNowDocs）核查，默认 OOTB 优先、定制给理由与替代。
+
+两个技能均全模块通用，**HRSD 为核心知识范围**（HR Service / Lifecycle Event / Journey 三要素，质量要求极高）。
 
 ## 工作流程（BA 第一步：模块判定）
 
